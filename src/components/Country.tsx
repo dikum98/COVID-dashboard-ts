@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import CountryProps from '../types/CountryProps';
 
 const CountryItem = styled.li`
   display: flex;
@@ -20,11 +21,6 @@ const CountryValue = styled.p`
   margin-right: 2rem;
   font-size: var(--text-size3);
 `;
-
-interface CountryProps {
-  countryName: string;
-  population: number;
-}
 
 const Country: React.FC<CountryProps> = ({ countryName, population }) => (
   <CountryItem>
