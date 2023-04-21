@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import { DataLastUpdatedProps } from '../types/Props';
 import getFormattedTimeFromMillis from '../utils/getFormattedTimeFromMillis';
-import UpdatedTimeProps from '../types/UpdatedTimeProps';
 
-const UpdatedTimeWrapper = styled.div`
+const DataLastUpdatedWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -26,11 +26,11 @@ const Time = styled.p`
   font-weight: bold;
 `;
 
-const UpdatedTime: React.FC<UpdatedTimeProps> = ({ updatedTime }) => (
-  <UpdatedTimeWrapper>
+const DataLastUpdated: React.FC<DataLastUpdatedProps> = ({ dataLastUpdated }) => (
+  <DataLastUpdatedWrapper>
     <Text>Updated at:</Text>
-    <Time>{getFormattedTimeFromMillis(updatedTime)}</Time>
-  </UpdatedTimeWrapper>
+    <Time>{getFormattedTimeFromMillis(dataLastUpdated)}</Time>
+  </DataLastUpdatedWrapper>
 );
 
-export default UpdatedTime;
+export default DataLastUpdated;
