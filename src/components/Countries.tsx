@@ -1,8 +1,10 @@
 import React, { useLayoutEffect, useState } from 'react';
 import styled from '@emotion/styled';
+import CountriesProps from '../types/CountriesProps';
 import Country from './Country';
 import fetchAllCountriesInfo from '../utils/fetchAllCountriesInfo';
 import CountryInfo from '../types/CountryInfo';
+import getNumberWidthCommas from '../utils/getNumberWithCommas';
 
 const CountriesWrapper = styled.div`
   margin-bottom: var(--margin-size3);
@@ -43,17 +45,17 @@ const CountriesList = styled.ul`
   }
 `;
 
-const Countries: React.FC = () => {
+const Countries: React.FC<CountriesProps> = () => {
   const [countryAndPopulation, setCountryAndPopulation] = useState([]);
 
-  const fetchCountryAndPopulation = async () => {
+  const filterCountryAndPopulation = async () => {
     const { data: countries } = await fetchAllCountriesInfo();
 
     setCountryAndPopulation(() => countries.map((country: CountryInfo) => [country.country, country.population]));
   };
 
   useLayoutEffect(() => {
-    fetchCountryAndPopulation();
+    filterCountryAndPopulation();
   }, []);
 
   return (
@@ -63,7 +65,7 @@ const Countries: React.FC = () => {
       </CountriesHeader>
       <CountriesList>
         {countryAndPopulation.map(([country, population]) => (
-          <Country key={country} countryName={country} population={population}></Country>
+          <Country key={country} countryName={country} population={getNumberWidthCommas(population)}></Country>
         ))}
       </CountriesList>
     </CountriesWrapper>
