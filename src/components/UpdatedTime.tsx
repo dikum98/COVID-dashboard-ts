@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import getFormattedTimeFromMillis from '../utils/getFormattedTimeFromMillis';
+import UpdatedTimeProps from '../types/UpdatedTimeProps';
 
 const UpdatedTimeWrapper = styled.div`
   display: flex;
@@ -25,10 +26,10 @@ const Time = styled.p`
   font-weight: bold;
 `;
 
-const UpdatedTime: React.FC = () => (
+const UpdatedTime: React.FC<UpdatedTimeProps> = ({ updatedTime }) => (
   <UpdatedTimeWrapper>
     <Text>Updated at:</Text>
-    <Time>{getFormattedTimeFromMillis(1681863521238)}</Time>
+    <Time>{getFormattedTimeFromMillis(updatedTime)}</Time>
   </UpdatedTimeWrapper>
 );
 
