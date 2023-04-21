@@ -1,12 +1,11 @@
 import React, { useState, useLayoutEffect, useRef } from 'react';
 import styled from '@emotion/styled';
 import { Chart as ChartJs } from 'chart.js/auto';
-import ChartProps from '../types/ChartProps';
-import fetchHistoricalData from '../utils/fetchHistoricalData';
+import { ChartProps } from '../types/Props';
+import fetchHistoricalInfo from '../utils/fetchHistoricalInfo';
 
 const ChartWrapper = styled.div`
   grid-column: 1 / -1;
-  position: relative;
   width: 100%;
   height: calc(100vh - 21rem);
   border: 1px soild var(--color-border);
@@ -14,11 +13,8 @@ const ChartWrapper = styled.div`
 `;
 
 const ChartCanvas = styled.canvas`
-  position: absolute;
-  top: 0;
-  left: 0;
   margin: 0 auto;
-  width: 100%;
+  min-width: 70%;
   height: 100%;
 `;
 
@@ -29,9 +25,9 @@ const Chart: React.FC<ChartProps> = ({ country }) => {
     labels: [],
   });
 
-  const setChartDataAsync = async (country: string) => {
+  const setChartDataAsync = async (country: string): Promise<void> => {
     if (!country) return;
-    const { data } = await fetchHistoricalData(country);
+    const { data } = await fetchHistoricalInfo(country);
 
     setChartData({
       date: Object.keys(data.timeline.cases),

@@ -1,27 +1,27 @@
 import React, { useState, useLayoutEffect } from 'react';
 import styled from '@emotion/styled';
-import getNumberWidthCommas from './utils/getNumberWithCommas';
-import TotalCount from './components/TotalCount';
+import CovidSummary from './types/CovidSummary';
+import CountryInfo from './types/CountryInfo';
+import TotalCount from './components/StatPanel';
 import Header from './components/Header';
 import Countries from './components/Countries';
-import UpdatedTime from './components/UpdatedTime';
-import TodayCount from './components/TodayCount';
+import DataLastUpdated from './components/DataLastUpdated';
+import TodayCount from './components/StatPanelToday';
 import Chart from './components/Chart';
+import getNumberWidthCommas from './utils/getNumberWithCommas';
 import fetchAllCountriesInfo from './utils/fetchAllCountriesInfo';
 import fetchCountryInfo from './utils/fetchCountryInfo';
-import CountryInfo from './types/CountryInfo';
-import TotalCounts from './types/TotalCounts';
 
 const WholeWrapper = styled.div`
   display: flex;
 `;
 
-const LeftSide = styled.div`
+const Sidebar = styled.div`
   margin-right: var(--margin-size3);
   width: 25%;
 `;
 
-const RightSide = styled.div`
+const MainContent = styled.div`
   flex: 1;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -29,7 +29,8 @@ const RightSide = styled.div`
 `;
 
 const App: React.FC = () => {
-  const [counts, setCounts] = useState<TotalCounts>({
+  const [country, setCountry] = useState<string>('');
+  const [covidSummary, setCovidSummary] = useState<CovidSummary>({
     cases: 0,
     todayCases: 0,
     deaths: 0,
@@ -38,12 +39,11 @@ const App: React.FC = () => {
     todayRecovered: 0,
     updatedTime: 0,
   });
-  const [country, setCountry] = useState('');
 
-  const sumAllCounts = async () => {
+  const sumAllCounts = async (): Promise<void> => {
     const { data: countries } = await fetchAllCountriesInfo();
 
-    setCounts({
+    setCovidSummary({
       ...countries.reduce(
         (obj: CountryInfo, country: CountryInfo) => ({
           ...obj,
@@ -61,16 +61,17 @@ const App: React.FC = () => {
           todayDeaths: 0,
           recovered: 0,
           todayRecovered: 0,
+          updatedTime: 0,
         }
       ),
       updatedTime: countries[0].updated,
     });
   };
 
-  const setCountryCountAsync = async (country: string) => {
+  const setCountryCountAsync = async (country: string): Promise<void> => {
     const { data } = await fetchCountryInfo(country);
 
-    setCounts({
+    setCovidSummary({
       cases: data.cases,
       todayCases: data.todayCases,
       deaths: data.deaths,
@@ -85,49 +86,48 @@ const App: React.FC = () => {
     sumAllCounts();
   }, []);
 
-  const onClickCountry = (e: React.MouseEvent<HTMLElement>) => {
+  const onClickCountry = (e: React.MouseEvent<HTMLElement>): void => {
     if (!(e.target instanceof HTMLElement && e.target.closest('ul'))) return;
     const countryName = e.target.closest('li')?.textContent?.replace(/[0-9,]/g, '');
 
-    if (countryName !== undefined) {
-      setCountry(countryName);
-      setCountryCountAsync(countryName);
-    }
+    if (!countryName) return;
+    setCountry(countryName);
+    setCountryCountAsync(countryName);
   };
 
   return (
     <div className="App" onClick={onClickCountry}>
       <Header title="COVID-19 Dashboard" />
       <WholeWrapper>
-        <LeftSide>
+        <Sidebar>
           <Countries></Countries>
-          <UpdatedTime updatedTime={counts.updatedTime} />
-        </LeftSide>
-        <RightSide>
+          <DataLastUpdated dataLastUpdated={covidSummary.updatedTime} />
+        </Sidebar>
+        <MainContent>
           <TotalCount
             panelName={'Total Cases'}
-            panelValue={getNumberWidthCommas(counts.cases)}
+            panelValue={getNumberWidthCommas(covidSummary.cases)}
             panelValueColor={'var(--color-cases)'}
           />
-          <TotalCount panelName={'Total Deaths'} panelValue={getNumberWidthCommas(counts.deaths)} />
+          <TotalCount panelName={'Total Deaths'} panelValue={getNumberWidthCommas(covidSummary.deaths)} />
           <TotalCount
             panelName={'Total Recovered'}
-            panelValue={getNumberWidthCommas(counts.recovered)}
+            panelValue={getNumberWidthCommas(covidSummary.recovered)}
             panelValueColor={'var(--color-recovered)'}
           />
           <TodayCount
             panelName={'Today Cases'}
-            panelValue={getNumberWidthCommas(counts.todayCases)}
+            panelValue={getNumberWidthCommas(covidSummary.todayCases)}
             panelValueColor={'var(--color-cases)'}
           />
-          <TodayCount panelName={'Today Deaths'} panelValue={getNumberWidthCommas(counts.todayDeaths)} />
+          <TodayCount panelName={'Today Deaths'} panelValue={getNumberWidthCommas(covidSummary.todayDeaths)} />
           <TodayCount
             panelName={'Today Recovered'}
-            panelValue={getNumberWidthCommas(counts.todayRecovered)}
+            panelValue={getNumberWidthCommas(covidSummary.todayRecovered)}
             panelValueColor={'var(--color-recovered)'}
           />
           <Chart country={country} />
-        </RightSide>
+        </MainContent>
       </WholeWrapper>
     </div>
   );
