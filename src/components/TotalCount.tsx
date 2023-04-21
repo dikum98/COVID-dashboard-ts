@@ -12,11 +12,6 @@ const TotalCountWrapper = styled.div`
   text-align: center;
   border: 1px solid var(--color-border);
   background-color: var(--color-foreground);
-
-  :hover {
-    cursor: pointer;
-    background-color: var(--color-hover);
-  }
 `;
 
 const Name = styled.p`

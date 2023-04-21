@@ -16,8 +16,6 @@ const Title = styled.h1`
   display: inline-block;
   padding-left: 2.625rem;
   font-size: var(--text-size3);
-  background: url('./src/images/logo.png');
-  background-size: 30px 30px;
 `;
 
 const Header: React.FC<HeaderProps> = ({ title }) => (
