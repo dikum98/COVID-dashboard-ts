@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import CountryProps from '../types/CountryProps';
+import { CountryProps } from '../types/Props';
 
 const CountryItem = styled.li`
   display: flex;

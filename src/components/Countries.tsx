@@ -1,9 +1,8 @@
 import React, { useLayoutEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import CountriesProps from '../types/CountriesProps';
+import CountryInfo from '../types/CountryInfo';
 import Country from './Country';
 import fetchAllCountriesInfo from '../utils/fetchAllCountriesInfo';
-import CountryInfo from '../types/CountryInfo';
 import getNumberWidthCommas from '../utils/getNumberWithCommas';
 
 const CountriesWrapper = styled.div`
@@ -45,10 +44,10 @@ const CountriesList = styled.ul`
   }
 `;
 
-const Countries: React.FC<CountriesProps> = () => {
-  const [countryAndPopulation, setCountryAndPopulation] = useState([]);
+const Countries: React.FC = () => {
+  const [countryAndPopulation, setCountryAndPopulation] = useState<[string, number][] | []>([]);
 
-  const filterCountryAndPopulation = async () => {
+  const filterCountryAndPopulation = async (): Promise<void> => {
     const { data: countries } = await fetchAllCountriesInfo();
 
     setCountryAndPopulation(() => countries.map((country: CountryInfo) => [country.country, country.population]));
