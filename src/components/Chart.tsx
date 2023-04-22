@@ -10,12 +10,21 @@ const ChartWrapper = styled.div`
   height: calc(100vh - 21rem);
   border: 1px soild var(--color-border);
   background-color: var(--color-foreground);
+
+  @media (max-width: 768px) {
+    height: 12rem;
+  }
 `;
 
 const ChartCanvas = styled.canvas`
   margin: 0 auto;
   min-width: 70%;
   height: 100%;
+
+  @media (max-width: 768px) {
+    margin-top: var(--margin-size3);
+    width: 95%;
+  }
 `;
 
 const Chart: React.FC<ChartProps> = ({ country }) => {

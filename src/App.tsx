@@ -14,11 +14,20 @@ import fetchCountryInfo from './utils/fetchCountryInfo';
 
 const WholeWrapper = styled.div`
   display: flex;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const Sidebar = styled.div`
   margin-right: var(--margin-size3);
   width: 25%;
+
+  @media (max-width: 768px) {
+    margin-bottom: var(--margin-size3);
+    width: 100%;
+  }
 `;
 
 const MainContent = styled.div`
@@ -26,6 +35,11 @@ const MainContent = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: var(--margin-size3);
+
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 const App: React.FC = () => {
