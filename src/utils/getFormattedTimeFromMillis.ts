@@ -5,5 +5,5 @@ export default function getFormattedTimeFromMillis(millis: number): string {
 
   return `${date.getFullYear()}.${addLeadingZero(date.getUTCMonth() + 1)}.${addLeadingZero(
     date.getUTCDate()
-  )}.${addLeadingZero(date.getHours())}:${addLeadingZero(date.getUTCMinutes())}`;
+  )}.${addLeadingZero(date.getHours())}:${addLeadingZero(date.getUTCMinutes())}` as const;
 }
