@@ -3,6 +3,7 @@
 ### 코로나 API와 chart.js를 활용한 타입스크립트 프로젝트 (1인)
 
 개발 기간 : `2023.04.20 ~ 2023.04.22`
+
 사용 기술 : `Figma` `emotion` `React` `TypeScript`
 
 ---
