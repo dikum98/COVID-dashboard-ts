@@ -24,7 +24,7 @@
 
 ---
 
-### 완료 화면
+### 구현된 화면
 
 <p align="center">PC 버전</p>
 <p align="center"><img src="https://user-images.githubusercontent.com/97519893/233814792-db64ae9e-c499-4580-b434-8b66bec87d7a.gif" width="400" height="200"/></p>
